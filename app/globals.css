@@ -18,6 +18,57 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+  
+  /* Custom background colors */
+  body {
+    background-color: oklch(0.94 0.01 0); /* Light mode background */
+  }
+  
+  .dark body {
+    background-color: oklch(0.33 0.01 0); /* Custom dark mode background */
+  }
+  
+  /* Font family definitions */
+  .font-display, .font-heading {
+    font-family: var(--font-univers-next);
+  }
+  
+  .font-body, .font-mono {
+    font-family: var(--font-edu-diatype);
+  }
+  
+  /* Apply heading fonts to common heading elements */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-univers-next);
+  }
+  
+  /* Hide scrollbars */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Smooth drag scrolling */
+  .drag-scroll {
+    scroll-behavior: smooth;
+  }
+  
+  .drag-scroll.dragging {
+    scroll-behavior: auto;
+    user-select: none;
+  }
+  
+  /* Prevent text selection during drag */
+  .no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
 }
 
 :root {

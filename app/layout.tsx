@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 import { Header } from './header'
 import { Footer } from './footer'
@@ -12,25 +12,28 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://nim-fawn.vercel.app/'),
+  metadataBase: new URL('https://uiio.dev/'),
   alternates: {
     canonical: '/'
   },
   title: {
-    default: 'Nim - Personal website template',
-    template: '%s | Nim'
+    default: 'uiio.dev',
+    template: '%s | uiio.dev'
   },
-  description:  'Nim is a free and open-source personal website template built with Next.js 15, React 19 and Motion-Primitives.',
+  description:  'uiio.dev is blending art, code, and storytelling to help brands and creators flow with purpose.',
 };
 
-const geist = Geist({
-  variable: '--font-geist',
-  subsets: ['latin'],
+
+const eduDiatype = localFont({
+  src: './font/EduDiatypeMono-Regular.otf',
+  display: 'swap',
+  variable: '--font-edu-diatype',
 })
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+const universNext = localFont({
+  src: './font/UniversNextPro-Bold.ttf',
+  display: 'swap',
+  variable: '--font-univers-next',
 })
 
 export default function RootLayout({
@@ -41,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geist.variable} ${geistMono.variable} bg-white tracking-tight antialiased dark:bg-zinc-950`}
+        className={`${universNext.variable} ${eduDiatype.variable} tracking-tight antialiased`}
       >
         <ThemeProvider
           enableSystem={true}
@@ -49,8 +52,8 @@ export default function RootLayout({
           storageKey="theme"
           defaultTheme="system"
         >
-          <div className="flex min-h-screen w-full flex-col font-[family-name:var(--font-inter-tight)]">
-            <div className="relative mx-auto w-full max-w-screen-sm flex-1 px-4 pt-20">
+          <div className="flex min-h-screen w-full flex-col font-[family-name:var(--font-edu-diatype)]">
+            <div className="relative w-full flex-1 px-8 pt-20 lg:px-12">
               <Header />
               {children}
               <Footer />

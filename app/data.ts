@@ -1,8 +1,14 @@
+type MediaItem = {
+  type: 'video' | 'image'
+  src: string
+  alt?: string
+}
+
 type Project = {
   name: string
   description: string
   link: string
-  video: string
+  media: MediaItem[]
   id: string
 }
 
@@ -29,22 +35,106 @@ type SocialLink = {
 
 export const PROJECTS: Project[] = [
   {
-    name: 'Motion Primitives Pro',
+    name: 'Jesus In Healthcare',
     description:
-      'Advanced components and templates to craft beautiful websites.',
+      'Recruiting Christian healthcare professionals to serve in hospitals and clinics across the globe.',
     link: 'https://pro.motion-primitives.com/',
-    video:
-      'https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/newProfileItem/d898be8a-7037-4c71-af0c-8997239b050d.mp4?_a=DATAdtAAZAA0',
+    media: [
+      {
+        type: 'video',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1715284496/blog/jesusinhealthcare/h4lx5perd7foxmjcjag3.mp4',
+      },
+      {
+        type: 'image',
+        src: 'https://res.cloudinary.com/mindflip/image/upload/v1715283435/blog/jesusinhealthcare/thge9bks39icwygsntyg.jpg',
+        alt: 'Jeusus In Healthcare homepage design on a laptop purched on a rock.'
+      },
+      {
+        type: 'video',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1715284496/blog/jesusinhealthcare/m81aiouhifbusqedsm28.mp4',
+      },
+      {
+        type: 'video',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1715282657/blog/jesusinhealthcare/tekhsb4qtcpoavecj96w.mp4',
+      },
+      {
+        type: 'video',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1715284496/blog/jesusinhealthcare/jq29zpqez54zlf1zv4lc.mp4',
+      },
+      {
+        type: 'video',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1715282657/blog/jesusinhealthcare/odiohfu0r5bfentluti9.mp4',
+      },
+      {
+        type: 'video',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1715282657/blog/jesusinhealthcare/sadk6tqu7t7j2sqojiu1.mp4',
+      },
+    ],
     id: 'project1',
   },
   {
     name: 'Motion Primitives',
-    description: 'UI kit to make beautiful, animated interfaces.',
+    description: 'A comprehensive UI kit featuring beautiful animations and interactive components for modern web development.',
     link: 'https://motion-primitives.com/',
-    video:
-      'https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/XSfIvT7BUWbPRXhrbLed/ee6871c9-8400-49d2-8be9-e32675eabf7e.mp4?_a=DATAdtAAZAA0',
+    media: [
+      {
+        type: 'video',
+        src: 'https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/XSfIvT7BUWbPRXhrbLed/ee6871c9-8400-49d2-8be9-e32675eabf7e.mp4?_a=DATAdtAAZAA0',
+      },
+      {
+        type: 'image',
+        src: 'https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=700&h=500&fit=crop&crop=center',
+        alt: 'Design system components'
+      },
+      {
+        type: 'image',
+        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=700&fit=crop&crop=center',
+        alt: 'Creative workspace setup'
+      },
+      {
+        type: 'image',
+        src: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&h=600&fit=crop&crop=center',
+        alt: 'User interface mockups'
+      },
+      {
+        type: 'video',
+        src: 'https://player.vimeo.com/external/348448849.sd.mp4?s=a54c1e82d5a02e4c6e7cea7a59ca1ba32cf5e59c&profile_id=139&oauth2_token_id=57447761',
+      },
+      {
+        type: 'image',
+        src: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop&crop=center',
+        alt: 'Component library showcase'
+      }
+    ],
     id: 'project2',
   },
+  {
+    name: 'Brand Identity System',
+    description: 'A complete brand identity and visual system featuring modern typography, color palettes, and design guidelines.',
+    link: '#',
+    media: [
+      {
+        type: 'image',
+        src: 'https://images.unsplash.com/photo-1493421419110-74f4e85ba126?w=800&h=500&fit=crop&crop=center',
+        alt: 'Brand identity materials'
+      },
+      {
+        type: 'image',
+        src: 'https://images.unsplash.com/photo-1558655146-d09347e92766?w=600&h=800&fit=crop&crop=center',
+        alt: 'Logo design variations'
+      },
+      {
+        type: 'video',
+        src: 'https://player.vimeo.com/external/317550081.sd.mp4?s=a54c1e82d5a02e4c6e7cea7a59ca1ba32cf5e59c&profile_id=139&oauth2_token_id=57447761',
+      },
+      {
+        type: 'image',
+        src: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&h=600&fit=crop&crop=center',
+        alt: 'Brand color palette'
+      }
+    ],
+    id: 'project3',
+  }
 ]
 
 export const WORK_EXPERIENCE: WorkExperience[] = [
@@ -106,20 +196,20 @@ export const BLOG_POSTS: BlogPost[] = [
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     label: 'Github',
-    link: 'https://github.com/ibelick',
+    link: 'https://github.com/micahbuller',
   },
   {
     label: 'Twitter',
-    link: 'https://twitter.com/ibelick',
+    link: 'https://twitter.com/officialbuller',
   },
   {
     label: 'LinkedIn',
-    link: 'https://www.linkedin.com/in/ibelick',
+    link: 'https://www.linkedin.com/in/micah-buller-879062126/',
   },
   {
     label: 'Instagram',
-    link: 'https://www.instagram.com/ibelick',
+    link: 'https://www.instagram.com/swisp',
   },
 ]
 
-export const EMAIL = 'your@email.com'
+export const EMAIL = 'hello@uiio.dev'
