@@ -21,11 +21,11 @@
   
   /* Custom background colors */
   body {
-    background-color: oklch(0.94 0.01 0); /* Light mode background */
+    background-color: oklch(0.94 0 0); /* Light mode background */
   }
   
   .dark body {
-    background-color: oklch(0.33 0.01 0); /* Custom dark mode background */
+    background-color: oklch(0.23 0 0); /* Dark mode background */
   }
   
   /* Font family definitions */

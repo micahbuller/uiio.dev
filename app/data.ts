@@ -38,7 +38,7 @@ export const PROJECTS: Project[] = [
     name: 'Jesus In Healthcare',
     description:
       'Recruiting Christian healthcare professionals to serve in hospitals and clinics across the globe.',
-    link: 'https://pro.motion-primitives.com/',
+    link: 'https://jesusinhealthcare.com',
     media: [
       {
         type: 'video',
@@ -47,7 +47,7 @@ export const PROJECTS: Project[] = [
       {
         type: 'image',
         src: 'https://res.cloudinary.com/mindflip/image/upload/v1715283435/blog/jesusinhealthcare/thge9bks39icwygsntyg.jpg',
-        alt: 'Jeusus In Healthcare homepage design on a laptop purched on a rock.'
+        alt: 'Jeusus In Healthcare homepage design on a laptop purched on a rock.',
       },
       {
         type: 'video',
@@ -70,71 +70,88 @@ export const PROJECTS: Project[] = [
         src: 'https://res.cloudinary.com/mindflip/video/upload/v1715282657/blog/jesusinhealthcare/sadk6tqu7t7j2sqojiu1.mp4',
       },
     ],
-    id: 'project1',
+    id: 'JesusInHealthcare',
   },
   {
-    name: 'Motion Primitives',
-    description: 'A comprehensive UI kit featuring beautiful animations and interactive components for modern web development.',
-    link: 'https://motion-primitives.com/',
+    name: 'Healthcare Reframed Podcast',
+    description:
+      'A podcast exploring how healthcare in America can be saved, featuring interviews with healthcare innovators from around the globe.',
+    link: 'https://healthcarereframed.com',
     media: [
       {
         type: 'video',
-        src: 'https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/XSfIvT7BUWbPRXhrbLed/ee6871c9-8400-49d2-8be9-e32675eabf7e.mp4?_a=DATAdtAAZAA0',
-      },
-      {
-        type: 'image',
-        src: 'https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=700&h=500&fit=crop&crop=center',
-        alt: 'Design system components'
-      },
-      {
-        type: 'image',
-        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=700&fit=crop&crop=center',
-        alt: 'Creative workspace setup'
-      },
-      {
-        type: 'image',
-        src: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&h=600&fit=crop&crop=center',
-        alt: 'User interface mockups'
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1760498941/uiio/healthcare%20reframed/Gradient_zcfkup.mov',
       },
       {
         type: 'video',
-        src: 'https://player.vimeo.com/external/348448849.sd.mp4?s=a54c1e82d5a02e4c6e7cea7a59ca1ba32cf5e59c&profile_id=139&oauth2_token_id=57447761',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1760499386/uiio/healthcare%20reframed/YouTube_Intro_1080_ccpglv.mov',
+      },
+      {
+        type: 'video',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1760498938/uiio/healthcare%20reframed/Grid_Of_Guests_jtlpkg.mov',
       },
       {
         type: 'image',
-        src: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop&crop=center',
-        alt: 'Component library showcase'
-      }
+        src: 'https://res.cloudinary.com/mindflip/image/upload/v1760499294/uiio/healthcare%20reframed/Goran_xmvp05.jpg',
+        alt: 'Goran, the guest of the Healthcare Reframed podcast sitting down with Judson how with a warm smile.',
+      },
+      {
+        type: 'video',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1760499692/uiio/healthcare%20reframed/Instagram_Scroll_qnt3j3.mov',
+      },
+      {
+        type: 'video',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1760498929/uiio/healthcare%20reframed/Slideshow_crn9zf.mov',
+      },
+      {
+        type: 'video',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1760499346/uiio/healthcare%20reframed/Millions_Of_Boardrooms_1080_sd8sum.mov',
+      },
+      {
+        type: 'image',
+        src: 'https://res.cloudinary.com/mindflip/image/upload/v1760498928/uiio/healthcare%20reframed/Transcript_g3bt3p.png',
+        alt: 'Elliott, the guest of the Healthcare Reframed podcast sitting down with Judson how with a warm smile as a thumbnail on the healthcare reframed website.',
+      },
+      {
+        type: 'video',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1760498942/uiio/healthcare%20reframed/Web_Scroll_phgaa1.mov',
+      },
     ],
-    id: 'project2',
+    id: 'HealthcareReframed',
   },
   {
-    name: 'Brand Identity System',
-    description: 'A complete brand identity and visual system featuring modern typography, color palettes, and design guidelines.',
+    name: 'Float Visual',
+    description:
+      'Architecture visualization business specializing in creating stunning 3D renderings and animations for architectural projects.',
     link: '#',
     media: [
       {
-        type: 'image',
-        src: 'https://images.unsplash.com/photo-1493421419110-74f4e85ba126?w=800&h=500&fit=crop&crop=center',
-        alt: 'Brand identity materials'
-      },
-      {
-        type: 'image',
-        src: 'https://images.unsplash.com/photo-1558655146-d09347e92766?w=600&h=800&fit=crop&crop=center',
-        alt: 'Logo design variations'
+        type: 'video',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1760498911/uiio/float%20visual/Float_Logo_y5l8qf.mov',
       },
       {
         type: 'video',
-        src: 'https://player.vimeo.com/external/317550081.sd.mp4?s=a54c1e82d5a02e4c6e7cea7a59ca1ba32cf5e59c&profile_id=139&oauth2_token_id=57447761',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1760498923/uiio/float%20visual/Arch_Reveal_ukwhsq.mov',
       },
       {
-        type: 'image',
-        src: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&h=600&fit=crop&crop=center',
-        alt: 'Brand color palette'
-      }
+        type: 'video',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1760498913/uiio/float%20visual/Drop_Down_Menu_on6cuz.mov',
+      },
+      {
+        type: 'video',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1760498914/uiio/float%20visual/Animation_Of_Box_gmyxxg.mov',
+      },
+      {
+        type: 'video',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1760498923/uiio/float%20visual/Carousel_n2rqen.mov',
+      },
+      {
+        type: 'video',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/v1760498912/uiio/float%20visual/Fourm_nmoaia.mov',
+      },
     ],
     id: 'project3',
-  }
+  },
 ]
 
 export const WORK_EXPERIENCE: WorkExperience[] = [
@@ -187,7 +204,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     title: 'How to Export Metadata from MDX for Next.js SEO',
-    description: 'A guide on exporting metadata from MDX files to leverage Next.js SEO features.',
+    description:
+      'A guide on exporting metadata from MDX files to leverage Next.js SEO features.',
     link: '/blog/example-mdx-metadata',
     uid: 'blog-4',
   },
