@@ -67,9 +67,21 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
     setIsLoaded(false)
     setHasError(false)
     setShowPlaceholder(true)
+    
+    // Fallback timeout for images that might not fire onLoad
+    if (media.type === 'image' || media.type === 'animated') {
+      const timeout = setTimeout(() => {
+        console.log('Image load timeout, forcing load state:', media.src)
+        setIsLoaded(true)
+        setShowPlaceholder(false)
+      }, 3000) // 3 second timeout
+      
+      return () => clearTimeout(timeout)
+    }
   }, [media.src])
 
   const handleLoad = () => {
+    console.log('Media loaded successfully:', media.src)
     setIsLoaded(true)
     setHasError(false)
     // Delay hiding placeholder for smooth transition like upcoming.studio
@@ -79,6 +91,7 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
   }
 
   const handleError = () => {
+    console.log('Media failed to load:', media.src)
     setHasError(true)
     setIsLoaded(false)
     setShowPlaceholder(false)
@@ -184,6 +197,8 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
               alt={media.alt || 'Project media'}
               onLoad={handleLoad}
               onError={handleError}
+              loading="eager"
+              crossOrigin="anonymous"
               className={`w-full h-auto rounded-lg transition-opacity duration-500 ease-out object-cover ${
                 isLoaded ? 'opacity-100' : 'opacity-0'
               } ${
