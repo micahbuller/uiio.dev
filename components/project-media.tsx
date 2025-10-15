@@ -33,21 +33,55 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
   const [hasError, setHasError] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const [showPlaceholder, setShowPlaceholder] = useState(true)
+  const [naturalDimensions, setNaturalDimensions] = useState<{ width: number; height: number } | null>(null)
   const dragThreshold = 5 // pixels
   const startPosition = useRef({ x: 0, y: 0 })
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
+  // Preload media to get natural dimensions
+  useEffect(() => {
+    const preloadMedia = async () => {
+      if (media.type === 'image' || media.type === 'animated') {
+        const img = document.createElement('img')
+        img.onload = () => {
+          setNaturalDimensions({ width: img.naturalWidth, height: img.naturalHeight })
+        }
+        img.onerror = () => {
+          console.error('Failed to preload image:', media.src)
+        }
+        img.src = getOptimizedVideoSrc(media.src, false) // Use optimized source
+      } else if (media.type === 'video') {
+        const video = document.createElement('video')
+        video.onloadedmetadata = () => {
+          setNaturalDimensions({ width: video.videoWidth, height: video.videoHeight })
+        }
+        video.onerror = () => {
+          console.error('Failed to preload video:', media.src)
+        }
+        video.src = getOptimizedVideoSrc(media.src, false)
+        video.preload = 'metadata'
+      }
+    }
+
+    preloadMedia()
+  }, [media.src, media.type])
+
   // Extract aspect ratio from media or set default
   const getAspectRatio = () => {
-    // If we have explicit dimensions, use them
-    if (media.width && media.height) {
-      const ratio = media.width / media.height
-      // Convert to CSS aspect-ratio
+    // First try natural dimensions from preloaded media
+    if (naturalDimensions) {
+      const ratio = naturalDimensions.width / naturalDimensions.height
       return ratio.toFixed(3)
     }
     
-    // Fallback defaults based on type
+    // Fallback to explicit dimensions from data
+    if (media.width && media.height) {
+      const ratio = media.width / media.height
+      return ratio.toFixed(3)
+    }
+    
+    // Final fallbacks based on type
     if (media.type === 'video') {
       return '1.778' // 16:9 = 1.778
     }
