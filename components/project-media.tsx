@@ -12,9 +12,10 @@ import {
 } from '@/components/ui/morphing-dialog'
 
 type MediaItem = {
-  type: 'video' | 'image'
+  type: 'video' | 'image' | 'animated'
   src: string
   alt?: string
+  animatedSrc?: string
 }
 
 type ProjectMediaProps = {
@@ -27,29 +28,69 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
   const [dragStarted, setDragStarted] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
+  const [showPlaceholder, setShowPlaceholder] = useState(true)
   const dragThreshold = 5 // pixels
   const startPosition = useRef({ x: 0, y: 0 })
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // Intersection Observer for videos only (not animated images)
+  useEffect(() => {
+    if (media.type !== 'video' || !containerRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsVisible(entry.isIntersecting)
+          if (videoRef.current) {
+            if (entry.isIntersecting) {
+              videoRef.current.play().catch(() => {
+                // Autoplay failed, which is normal in some cases
+              })
+            } else {
+              videoRef.current.pause()
+            }
+          }
+        })
+      },
+      { threshold: 0.5 } // Play when 50% visible
+    )
+
+    observer.observe(containerRef.current)
+    return () => observer.disconnect()
+  }, [media.type])
 
   // Reset loading state when media changes
   useEffect(() => {
     setIsLoaded(false)
     setHasError(false)
+    setShowPlaceholder(true)
   }, [media.src])
 
   const handleLoad = () => {
     setIsLoaded(true)
     setHasError(false)
+    // Delay hiding placeholder for smooth transition like upcoming.studio
+    setTimeout(() => {
+      setShowPlaceholder(false)
+    }, 150)
   }
 
   const handleError = () => {
     setHasError(true)
-    setIsLoaded(false) // Keep skeleton visible on error
+    setIsLoaded(false)
+    setShowPlaceholder(false)
   }
 
   const handleLoadingComplete = () => {
     // Next.js Image specific event - fires when image is fully loaded and decoded
     setIsLoaded(true)
     setHasError(false)
+    // Delay hiding placeholder for smooth transition
+    setTimeout(() => {
+      setShowPlaceholder(false)
+    }, 150)
   }
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -86,68 +127,80 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
     >
       <MorphingDialogTrigger>
         <div
+          ref={containerRef}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onClick={handleClick}
-          className="cursor-pointer relative"
+          className="cursor-pointer relative w-full h-full"
         >
+          {/* Upcoming Studio Style Placeholder - matches exact size */}
+          {showPlaceholder && (
+            <div 
+              className="absolute inset-0 bg-neutral-200 dark:bg-neutral-800 transition-opacity duration-300 ease-out z-10 rounded-lg"
+              style={{
+                opacity: isLoaded ? 0 : 1,
+              }}
+            />
+          )}
+
           {/* Error state */}
           {hasError && (
             <div 
-              className="flex items-center justify-center bg-zinc-800 rounded text-zinc-500 text-sm"
+              className="flex items-center justify-center bg-zinc-800 rounded-lg text-zinc-500 text-sm"
               style={{ 
                 width: '100%',
-                height: '200px',
-                maxWidth: '400px'
+                height: '200px'
               }}
             >
               Failed to load media
             </div>
           )}
           
+          {/* Media Content */}
           {media.type === 'video' ? (
             <video
+              ref={videoRef}
               src={media.src}
-              autoPlay
               loop
               muted
               playsInline
               webkit-playsinline="true"
+              preload="metadata"
               onLoadStart={() => setIsLoaded(false)}
               onCanPlay={handleLoad}
               onError={handleError}
-              className={`rounded object-contain ${
+              className={`w-full h-auto object-cover rounded-lg transition-opacity duration-500 ease-out ${
+                isLoaded ? 'opacity-100' : 'opacity-0'
+              } ${
                 isDragging || dragStarted ? 'cursor-grabbing' : 'cursor-zoom-in'
               } ${className}`}
-              style={{ 
-                width: '100%',
-                height: 'auto',
-                maxWidth: '400px',
-                maxHeight: '600px'
-              }}
               draggable={false}
             />
-          ) : (
+          ) : media.type === 'image' || media.type === 'animated' ? (
             <Image
               src={media.src}
               alt={media.alt || 'Project media'}
-              width={400}
+              width={436}
               height={600}
+              sizes="(min-width: 768px) 436px, 255px"
+              quality={75}
               onLoad={handleLoad}
               onLoadingComplete={handleLoadingComplete}
               onError={handleError}
-              priority={true} // Load immediately, no lazy loading
-              className={`rounded object-contain ${
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+              className={`w-full h-auto rounded-lg transition-opacity duration-500 ease-out object-cover ${
+                isLoaded ? 'opacity-100' : 'opacity-0'
+              } ${
                 isDragging || dragStarted ? 'cursor-grabbing' : 'cursor-zoom-in'
               } ${className}`}
-              style={{ 
-                width: '100%',
-                height: 'auto',
-                maxWidth: '400px',
-                maxHeight: '600px'
-              }}
               draggable={false}
             />
+          ) : (
+            <div className="flex items-center justify-center bg-zinc-800 rounded-lg text-zinc-500 text-sm h-48">
+              Unsupported media type: {media.type}
+            </div>
           )}
         </div>
       </MorphingDialogTrigger>
@@ -165,7 +218,7 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
             />
           ) : (
             <Image
-              src={media.src}
+              src={media.animatedSrc || media.src}
               alt={media.alt || 'Project media'}
               width={1200}
               height={800}

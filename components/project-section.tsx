@@ -4,9 +4,10 @@ import { motion } from 'motion/react'
 import { HorizontalProjectGallery } from './horizontal-project-gallery'
 
 type MediaItem = {
-  type: 'video' | 'image'
+  type: 'video' | 'image' | 'animated'
   src: string
   alt?: string
+  animatedSrc?: string
 }
 
 type Project = {
@@ -24,7 +25,7 @@ type ProjectSectionProps = {
 
 export function ProjectSection({ project, className = '' }: ProjectSectionProps) {
   return (
-    <div className={`space-y-6 ${className}`}>
+    <div className={`space-y-4 ${className}`}>
       {/* Project title and description - aligned with page content */}
       <div className="space-y-2">
         <a

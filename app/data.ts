@@ -1,7 +1,9 @@
 type MediaItem = {
-  type: 'video' | 'image'
+  type: 'video' | 'image' | 'animated'
   src: string
   alt?: string
+  // For animated images converted from video
+  animatedSrc?: string
 }
 
 type Project = {
@@ -42,7 +44,7 @@ export const PROJECTS: Project[] = [
     media: [
       {
         type: 'video',
-        src: 'https://res.cloudinary.com/mindflip/video/upload/v1715284496/blog/jesusinhealthcare/h4lx5perd7foxmjcjag3.mp4',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/q_auto:low,w_600,br_300k/v1715284496/blog/jesusinhealthcare/h4lx5perd7foxmjcjag3.mp4',
       },
       {
         type: 'image',

@@ -67,7 +67,7 @@ function MagneticSocialLink({
 export default function Personal() {
   return (
     <motion.main
-      className="space-y-16"
+      className="space-y-12"
       variants={VARIANTS_CONTAINER}
       initial="hidden"
       animate="visible"
@@ -76,7 +76,7 @@ export default function Personal() {
       <motion.section
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
-        className="space-y-12"
+        className="space-y-8"
       >
         {PROJECTS.map((project) => (
           <motion.div

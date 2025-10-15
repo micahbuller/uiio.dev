@@ -19,6 +19,17 @@
     border-color: var(--color-gray-200, currentColor);
   }
   
+  /* Prevent horizontal overflow */
+  html {
+    overflow-x: hidden;
+  }
+  
+  body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+  }
+  
   /* Custom background colors */
   body {
     background-color: oklch(0.94 0 0); /* Light mode background */

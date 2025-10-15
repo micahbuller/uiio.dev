@@ -52,8 +52,8 @@ export default function RootLayout({
           storageKey="theme"
           defaultTheme="system"
         >
-          <div className="flex min-h-screen w-full flex-col font-[family-name:var(--font-edu-diatype)]">
-            <div className="relative w-full flex-1 px-8 pt-20 lg:px-12">
+          <div className="flex min-h-screen w-full flex-col font-[family-name:var(--font-edu-diatype)] overflow-x-hidden">
+            <div className="relative w-full flex-1 px-4 pt-20 sm:px-6 lg:px-8">
               <Header />
               {children}
               <Footer />

@@ -4,9 +4,10 @@ import { useRef, useState, useEffect } from 'react'
 import { ProjectMedia } from './project-media'
 
 type MediaItem = {
-  type: 'video' | 'image'
+  type: 'video' | 'image' | 'animated'
   src: string
   alt?: string
+  animatedSrc?: string
 }
 
 type HorizontalProjectGalleryProps = {
@@ -75,13 +76,19 @@ export function HorizontalProjectGallery({
   }, [isDragging])
 
   return (
-    <div className={`${className}`}>
+    <div className={`w-full ${className}`}>
       {/* Horizontal scrolling container */}
       <div 
         ref={scrollContainerRef}
-        className={`flex gap-6 overflow-x-auto pb-6 scrollbar-hide drag-scroll pl-8 lg:pl-12 pr-8 lg:pr-12 items-start ${
+        className={`flex gap-4 overflow-x-auto pb-6 scrollbar-hide drag-scroll items-start ${
           isDragging ? 'dragging cursor-grabbing no-select' : 'cursor-grab'
         }`}
+        style={{
+          marginLeft: '-1rem',
+          marginRight: '-1rem',
+          paddingLeft: '1rem',
+          paddingRight: '1rem',
+        }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -92,11 +99,11 @@ export function HorizontalProjectGallery({
             key={index} 
             className="flex-none"
             style={{ 
-              width: 'auto',
-              maxWidth: '400px'
+              width: 'min(436px, 70vw)',
+              minWidth: '255px'
             }}
           >
-            <div className="relative">
+            <div className="relative overflow-hidden rounded-lg">
               <ProjectMedia 
                 media={item}
                 className=""
