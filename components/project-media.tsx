@@ -17,6 +17,8 @@ type MediaItem = {
   src: string
   alt?: string
   animatedSrc?: string
+  width?: number
+  height?: number
 }
 
 type ProjectMediaProps = {
@@ -36,7 +38,42 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  // Intersection Observer for videos only (not animated images)
+  // Extract aspect ratio from media or set default
+  const getAspectRatio = () => {
+    // If we have explicit dimensions, use them
+    if (media.width && media.height) {
+      const ratio = media.width / media.height
+      // Convert to CSS aspect-ratio
+      return ratio.toFixed(3)
+    }
+    
+    // Fallback defaults based on type
+    if (media.type === 'video') {
+      return '1.778' // 16:9 = 1.778
+    }
+    
+    if (media.type === 'image' || media.type === 'animated') {
+      return '1.333' // 4:3 = 1.333
+    }
+    
+    return '1.778' // fallback
+  }
+
+  // Progressive video loading - start with low quality, upgrade when visible
+  const getOptimizedVideoSrc = (src: string, isHighQuality = false) => {
+    if (!src.includes('cloudinary.com')) return src
+    
+    // Extract the base URL without existing transformations
+    const baseUrl = src.replace(/\/upload\/[^\/]+\//, '/upload/')
+    
+    if (isHighQuality && isVisible) {
+      // High quality for visible videos
+      return baseUrl.replace('/upload/', '/upload/q_auto:good,w_1000,br_800k,f_auto/')
+    } else {
+      // Medium quality for gallery - better balance
+      return baseUrl.replace('/upload/', '/upload/q_auto:good,w_600,br_400k,f_auto/')
+    }
+  }
   useEffect(() => {
     if (media.type !== 'video' || !containerRef.current) return
 
@@ -154,6 +191,7 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
               className="absolute inset-0 bg-neutral-200 dark:bg-neutral-800 transition-opacity duration-300 ease-out z-10 rounded-lg"
               style={{
                 opacity: isLoaded ? 0 : 1,
+                aspectRatio: getAspectRatio(),
               }}
             />
           )}
@@ -175,14 +213,16 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
           {media.type === 'video' ? (
             <video
               ref={videoRef}
-              src={media.src}
+              src={getOptimizedVideoSrc(media.src, false)}
               loop
               muted
               playsInline
               webkit-playsinline="true"
-              preload="metadata"
+              preload="none"
+              poster={`${media.src.replace(/\.(mp4|webm|mov)$/, '.jpg')}`}
               onLoadStart={() => setIsLoaded(false)}
               onCanPlay={handleLoad}
+              onLoadedData={handleLoad}
               onError={handleError}
               className={`w-full h-auto object-cover rounded-lg transition-opacity duration-500 ease-out ${
                 isLoaded ? 'opacity-100' : 'opacity-0'
@@ -218,7 +258,7 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
           {/* Same content as trigger but WITHOUT loading states/placeholders */}
           {media.type === 'video' ? (
             <video
-              src={media.src}
+              src={getOptimizedVideoSrc(media.src, true)}
               autoPlay
               loop
               muted

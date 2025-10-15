@@ -4,6 +4,9 @@ type MediaItem = {
   alt?: string
   // For animated images converted from video
   animatedSrc?: string
+  // Add dimensions for proper aspect ratio
+  width?: number
+  height?: number
 }
 
 type Project = {
@@ -44,32 +47,38 @@ export const PROJECTS: Project[] = [
     media: [
       {
         type: 'video',
-        src: 'https://res.cloudinary.com/mindflip/video/upload/q_auto:low,w_600,br_300k/v1715284496/blog/jesusinhealthcare/h4lx5perd7foxmjcjag3.mp4',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/q_auto:good,w_600,br_400k,f_auto/v1715284496/blog/jesusinhealthcare/h4lx5perd7foxmjcjag3.mp4',
+        width: 1920,
+        height: 1080,
       },
       {
         type: 'image',
-        src: 'https://res.cloudinary.com/mindflip/image/upload/v1715283435/blog/jesusinhealthcare/thge9bks39icwygsntyg.jpg',
+        src: 'https://res.cloudinary.com/mindflip/image/upload/q_auto:good,w_800,f_auto/v1715283435/blog/jesusinhealthcare/thge9bks39icwygsntyg.jpg',
         alt: 'Jeusus In Healthcare homepage design on a laptop purched on a rock.',
+        width: 1600,
+        height: 1200,
       },
       {
         type: 'video',
-        src: 'https://res.cloudinary.com/mindflip/video/upload/v1715284496/blog/jesusinhealthcare/m81aiouhifbusqedsm28.mp4',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/q_auto:good,w_600,br_400k,f_auto/v1715284496/blog/jesusinhealthcare/m81aiouhifbusqedsm28.mp4',
+        width: 1920,
+        height: 1080,
       },
       {
         type: 'video',
-        src: 'https://res.cloudinary.com/mindflip/video/upload/v1715282657/blog/jesusinhealthcare/tekhsb4qtcpoavecj96w.mp4',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/q_auto:good,w_600,br_400k,f_auto/v1715282657/blog/jesusinhealthcare/tekhsb4qtcpoavecj96w.mp4',
       },
       {
         type: 'video',
-        src: 'https://res.cloudinary.com/mindflip/video/upload/v1715284496/blog/jesusinhealthcare/jq29zpqez54zlf1zv4lc.mp4',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/q_auto:good,w_600,br_400k,f_auto/v1715284496/blog/jesusinhealthcare/jq29zpqez54zlf1zv4lc.mp4',
       },
       {
         type: 'video',
-        src: 'https://res.cloudinary.com/mindflip/video/upload/v1715282657/blog/jesusinhealthcare/odiohfu0r5bfentluti9.mp4',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/q_auto:good,w_600,br_400k,f_auto/v1715282657/blog/jesusinhealthcare/odiohfu0r5bfentluti9.mp4',
       },
       {
         type: 'video',
-        src: 'https://res.cloudinary.com/mindflip/video/upload/v1715282657/blog/jesusinhealthcare/sadk6tqu7t7j2sqojiu1.mp4',
+        src: 'https://res.cloudinary.com/mindflip/video/upload/q_auto:good,w_600,br_400k,f_auto/v1715282657/blog/jesusinhealthcare/sadk6tqu7t7j2sqojiu1.mp4',
       },
     ],
     id: 'JesusInHealthcare',
