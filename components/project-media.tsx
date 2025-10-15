@@ -9,6 +9,7 @@ import {
   MorphingDialogContent,
   MorphingDialogClose,
   MorphingDialogContainer,
+  MorphingDialogImage,
 } from '@/components/ui/morphing-dialog'
 
 type MediaItem = {
@@ -114,6 +115,7 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
     if (dragStarted || isDragging) {
       e.preventDefault()
       e.stopPropagation()
+      return false
     }
   }
 
@@ -177,19 +179,11 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
               draggable={false}
             />
           ) : media.type === 'image' || media.type === 'animated' ? (
-            <Image
+            <img
               src={media.src}
               alt={media.alt || 'Project media'}
-              width={436}
-              height={600}
-              sizes="(min-width: 768px) 436px, 255px"
-              quality={75}
               onLoad={handleLoad}
-              onLoadingComplete={handleLoadingComplete}
               onError={handleError}
-              loading="lazy"
-              placeholder="blur"
-              blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
               className={`w-full h-auto rounded-lg transition-opacity duration-500 ease-out object-cover ${
                 isLoaded ? 'opacity-100' : 'opacity-0'
               } ${
@@ -205,7 +199,8 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
         </div>
       </MorphingDialogTrigger>
       <MorphingDialogContainer>
-        <MorphingDialogContent className="relative rounded bg-zinc-50 p-1 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950 dark:ring-zinc-800/50 max-w-5xl max-h-[85vh]">
+        <MorphingDialogContent className="pointer-events-auto relative bg-zinc-50 p-1 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950 dark:ring-zinc-800/50 rounded-2xl min-h-[60vh] min-w-[60vw] max-w-5xl max-h-[85vh] flex items-center justify-center">
+          {/* Same content as trigger but WITHOUT loading states/placeholders */}
           {media.type === 'video' ? (
             <video
               src={media.src}
@@ -214,16 +209,22 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
               muted
               playsInline
               webkit-playsinline="true"
-              className="w-full h-full rounded object-contain max-h-[80vh]"
+              preload="auto"
+              className="w-full h-auto max-h-[80vh] rounded-lg object-contain"
+              style={{ opacity: 1 }}
             />
-          ) : (
-            <Image
+          ) : media.type === 'image' || media.type === 'animated' ? (
+            <img
               src={media.animatedSrc || media.src}
               alt={media.alt || 'Project media'}
-              width={1200}
-              height={800}
-              className="w-full h-full rounded object-contain max-h-[80vh]"
+              className="w-full h-auto max-h-[80vh] rounded-lg object-contain opacity-100"
+              style={{ opacity: 1 }}
+              draggable={false}
             />
+          ) : (
+            <div className="flex items-center justify-center bg-zinc-800 rounded-lg text-zinc-500 text-sm h-48">
+              Unsupported media type: {media.type}
+            </div>
           )}
         </MorphingDialogContent>
         <MorphingDialogClose
