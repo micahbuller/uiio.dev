@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
+import Image from 'next/image'
 import { XIcon } from 'lucide-react'
 import {
   MorphingDialog,
@@ -24,8 +25,32 @@ type ProjectMediaProps = {
 
 export function ProjectMedia({ media, className = '', isDragging = false }: ProjectMediaProps) {
   const [dragStarted, setDragStarted] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [hasError, setHasError] = useState(false)
   const dragThreshold = 5 // pixels
   const startPosition = useRef({ x: 0, y: 0 })
+
+  // Reset loading state when media changes
+  useEffect(() => {
+    setIsLoaded(false)
+    setHasError(false)
+  }, [media.src])
+
+  const handleLoad = () => {
+    setIsLoaded(true)
+    setHasError(false)
+  }
+
+  const handleError = () => {
+    setHasError(true)
+    setIsLoaded(false) // Keep skeleton visible on error
+  }
+
+  const handleLoadingComplete = () => {
+    // Next.js Image specific event - fires when image is fully loaded and decoded
+    setIsLoaded(true)
+    setHasError(false)
+  }
 
   const handleMouseDown = (e: React.MouseEvent) => {
     startPosition.current = { x: e.clientX, y: e.clientY }
@@ -64,14 +89,33 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onClick={handleClick}
-          className="cursor-pointer"
+          className="cursor-pointer relative"
         >
+          {/* Error state */}
+          {hasError && (
+            <div 
+              className="flex items-center justify-center bg-zinc-800 rounded text-zinc-500 text-sm"
+              style={{ 
+                width: '100%',
+                height: '200px',
+                maxWidth: '400px'
+              }}
+            >
+              Failed to load media
+            </div>
+          )}
+          
           {media.type === 'video' ? (
             <video
               src={media.src}
               autoPlay
               loop
               muted
+              playsInline
+              webkit-playsinline="true"
+              onLoadStart={() => setIsLoaded(false)}
+              onCanPlay={handleLoad}
+              onError={handleError}
               className={`rounded object-contain ${
                 isDragging || dragStarted ? 'cursor-grabbing' : 'cursor-zoom-in'
               } ${className}`}
@@ -84,9 +128,15 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
               draggable={false}
             />
           ) : (
-            <img
+            <Image
               src={media.src}
               alt={media.alt || 'Project media'}
+              width={400}
+              height={600}
+              onLoad={handleLoad}
+              onLoadingComplete={handleLoadingComplete}
+              onError={handleError}
+              priority={true} // Load immediately, no lazy loading
               className={`rounded object-contain ${
                 isDragging || dragStarted ? 'cursor-grabbing' : 'cursor-zoom-in'
               } ${className}`}
@@ -109,12 +159,16 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
               autoPlay
               loop
               muted
+              playsInline
+              webkit-playsinline="true"
               className="w-full h-full rounded object-contain max-h-[80vh]"
             />
           ) : (
-            <img
+            <Image
               src={media.src}
               alt={media.alt || 'Project media'}
+              width={1200}
+              height={800}
               className="w-full h-full rounded object-contain max-h-[80vh]"
             />
           )}
