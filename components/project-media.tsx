@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { XIcon } from 'lucide-react'
 import {
@@ -29,9 +29,12 @@ type ProjectMediaProps = {
 
 export function ProjectMedia({ media, className = '', isDragging = false }: ProjectMediaProps) {
   const [dragStarted, setDragStarted] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
+  const [hasInteracted, setHasInteracted] = useState(false)
   const dragThreshold = 5 // pixels
   const startPosition = useRef({ x: 0, y: 0 })
   const videoRef = useRef<HTMLVideoElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setDragStarted(false)
@@ -53,8 +56,58 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
     if (dragStarted || isDragging) {
       e.preventDefault()
       e.stopPropagation()
+      return
+    }
+    
+    // Enable video autoplay after user interaction
+    if (media.type === 'video' && videoRef.current && !hasInteracted) {
+      setHasInteracted(true)
+      videoRef.current.play().catch(() => {
+        // Autoplay failed, which is normal
+      })
     }
   }
+
+  // Intersection Observer for video autoplay when visible
+  useEffect(() => {
+    if (media.type !== 'video' || !containerRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsVisible(entry.isIntersecting)
+          
+          if (videoRef.current) {
+            if (entry.isIntersecting && hasInteracted) {
+              videoRef.current.play().catch(() => {
+                // Autoplay failed
+              })
+            } else if (!entry.isIntersecting) {
+              videoRef.current.pause()
+            }
+          }
+        })
+      },
+      { threshold: 0.3 }
+    )
+
+    observer.observe(containerRef.current)
+    return () => observer.disconnect()
+  }, [media.type, hasInteracted])
+
+  // Try to autoplay when video becomes visible (works on desktop)
+  useEffect(() => {
+    if (media.type === 'video' && videoRef.current && isVisible) {
+      const video = videoRef.current
+      const playPromise = video.play()
+      
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Autoplay was prevented, will need user interaction
+        })
+      }
+    }
+  }, [isVisible, media.type])
 
   // Get optimized Cloudinary URL
   const getOptimizedSrc = (src: string, isHighQuality = false) => {
@@ -156,10 +209,11 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
     )
   }
 
-  return (
-    <MorphingDialog>
+    return (
+      <MorphingDialog>
       <MorphingDialogTrigger>
         <div
+          ref={containerRef}
           className={`group cursor-pointer select-none ${className}`}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
@@ -171,6 +225,14 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
         >
           <div className="relative w-full h-full rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-800">
             {renderMedia()}
+            {/* Play button overlay for videos on mobile */}
+            {media.type === 'video' && !hasInteracted && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/20 md:hidden">
+                <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center">
+                  <div className="w-0 h-0 border-l-[8px] border-l-black border-y-[6px] border-y-transparent ml-1"></div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </MorphingDialogTrigger>
