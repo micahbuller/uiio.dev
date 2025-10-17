@@ -48,21 +48,21 @@ export const PROJECTS: Project[] = [
       {
         type: 'video',
         src: 'https://res.cloudinary.com/mindflip/video/upload/v1760716443/uiio/jesus%20in%20healthcare/h4lx5perd7foxmjcjag3_h265_wkqdsg.mp4',
-        width: 1080,
-        height: 1920,
+        width: 1200,
+        height: 2000,
       },
       {
         type: 'image',
         src: 'https://res.cloudinary.com/mindflip/image/upload/v1760716446/uiio/jesus%20in%20healthcare/thge9bks39icwygsntyg_Medium_m3l3mq.jpg',
         alt: 'Jeusus In Healthcare homepage design on a laptop purched on a rock.',
-        width: 1000,
-        height: 1000,
+        width: 640,
+        height: 640,
       },
       {
         type: 'video',
         src: 'https://res.cloudinary.com/mindflip/video/upload/v1760716443/uiio/jesus%20in%20healthcare/m81aiouhifbusqedsm28_h265_ipham2.mp4',
-        width: 1080,
-        height: 1920,
+        width: 1200,
+        height: 2000,
       },
       {
         type: 'video',
@@ -73,8 +73,8 @@ export const PROJECTS: Project[] = [
       {
         type: 'video',
         src: 'https://res.cloudinary.com/mindflip/video/upload/v1760716442/uiio/jesus%20in%20healthcare/jq29zpqez54zlf1zv4lc_h265_t9noie.mp4',
-        width: 1080,
-        height: 1920,
+        width: 1200,
+        height: 2000,
       },
       {
         type: 'video',

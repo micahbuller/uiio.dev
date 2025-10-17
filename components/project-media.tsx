@@ -143,10 +143,7 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
   const handleLoad = () => {
     setIsLoaded(true)
     setHasError(false)
-    // Delay hiding placeholder for smooth transition like upcoming.studio
-    setTimeout(() => {
-      setShowPlaceholder(false)
-    }, 150)
+    setShowPlaceholder(false)
   }
 
   const handleError = () => {
@@ -207,11 +204,10 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
           className="cursor-pointer relative w-full h-full"
         >
           {/* Upcoming Studio Style Placeholder - matches exact size */}
-          {showPlaceholder && (
+          {showPlaceholder && !isLoaded && (
             <div 
               className="absolute inset-0 bg-neutral-200 dark:bg-neutral-800 transition-opacity duration-300 ease-out z-10 rounded-lg"
               style={{
-                opacity: isLoaded ? 0 : 1,
                 aspectRatio: getAspectRatio(),
               }}
             />
@@ -253,9 +249,11 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
               draggable={false}
             />
           ) : media.type === 'image' || media.type === 'animated' ? (
-            <img
+            <Image
               src={media.src}
               alt={media.alt || 'Project media'}
+              width={media.width || 800}
+              height={media.height || 600}
               onLoad={handleLoad}
               onError={handleError}
               className={`w-full h-auto rounded-lg transition-opacity duration-500 ease-out object-cover ${
@@ -264,6 +262,8 @@ export function ProjectMedia({ media, className = '', isDragging = false }: Proj
                 isDragging || dragStarted ? 'cursor-grabbing' : 'cursor-zoom-in'
               } ${className}`}
               draggable={false}
+              placeholder="blur"
+              blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
             />
           ) : (
             <div className="flex items-center justify-center bg-zinc-800 rounded-lg text-zinc-500 text-sm h-48">
