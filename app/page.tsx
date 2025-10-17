@@ -2,11 +2,8 @@
 import { motion } from 'motion/react'
 import { Magnetic } from '@/components/ui/magnetic'
 import { ProjectSection } from '@/components/project-section'
-import Link from 'next/link'
-import { AnimatedBackground } from '@/components/ui/animated-background'
 import {
   PROJECTS,
-  BLOG_POSTS,
   EMAIL,
   SOCIAL_LINKS,
 } from './data'
