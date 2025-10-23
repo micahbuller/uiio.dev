@@ -43,7 +43,7 @@ export const PROJECTS: Project[] = [
     name: 'Jesus In Healthcare',
     description:
       'Recruiting Christian healthcare professionals to serve in hospitals and clinics across the globe.',
-    link: 'https://jesusinhealthcare.com',
+    link: '/',
     media: [
       {
         type: 'video',
@@ -95,7 +95,7 @@ export const PROJECTS: Project[] = [
     name: 'Healthcare Reframed Podcast',
     description:
       'A podcast exploring how healthcare in America can be saved, featuring interviews with healthcare innovators from around the globe.',
-    link: 'https://healthcarereframed.com',
+    link: 'https://healthcarereframed.org',
     media: [
       {
         type: 'video',
